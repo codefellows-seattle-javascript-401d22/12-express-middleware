@@ -7,9 +7,10 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "DEBUG='note*' jest",
-    "test-coverage": "DEBUG='note*' jest --coverage",
-    "start": "DEBUG='note*' node server.js"
+    "test": "DEBUG='recipe*' jest",
+    "test-coverage": "DEBUG='recipe*' jest --coverage",
+    "start": "DEBUG='recipe*' node server.js",
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "",
@@ -18,8 +19,10 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "debug": "^3.1.0",
+    "eslint": "^4.18.1",
     "express": "^4.16.2",
     "http-errors": "^1.6.2",
+    "morgan": "^1.9.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
