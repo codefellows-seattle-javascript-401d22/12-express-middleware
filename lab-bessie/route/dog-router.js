@@ -38,6 +38,7 @@ dogRouter.put('/api/dog/:id', jsonParser, function(req, res, next) {
 
 dogRouter.delete('/api/dog/:id', function(req, res, next) {
   debug('DELETE: /api/dog/:id');
+  next();
 });
 
 module.exports = dogRouter;
