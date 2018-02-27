@@ -1,0 +1,28 @@
+{
+  "name": "lab-ahmed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "debug": "^3.1.0",
+    "http-errors": "^1.6.2",
+    "morgan": "^1.9.0",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "jest": "^22.4.2",
+    "superagent": "^3.8.2"
+  }
+}
