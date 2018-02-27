@@ -1,43 +1,43 @@
 'use strict';
 
 const request = require('superagent');
-const Note = require('../model/note.js');
+const Dog = require('../model/dog.js');
 const url = 'http://localhost:3000';
 
 require('jest');
 require('../server.js');
 
-const exampleNote = {
+const exampleDog = {
   name: 'example name',
-  content: 'example content',
+  breed: 'example breed',
 };
 
-describe('Note Routes', function () {
+describe('Dog Routes', function () {
   // GET tests start here
-  describe('GET: /api/note', function () {
+  describe('GET: /api/dog', function () {
     describe('with a valid id', function () {
       beforeEach(done => {
-        Note.createNote(exampleNote)
-          .then(note => {
-            this.tempNote = note;
+        Dog.createDog(exampleDog)
+          .then(dog => {
+            this.tempDog = dog;
             done();
           })
           .catch(err => done(err));
       });
       afterAll(done => {
-        Note.deleteNote(this.tempNote.id)
+        Dog.deleteDog(this.tempDog.id)
           .then(() => done())
           .catch(err => done(err));
       });
 
-      it('should return a note', done => {
-        request.get(`${url}/api/note/${this.tempNote.id}`)
+      it('should return a dog', done => {
+        request.get(`${url}/api/dog/${this.tempDog.id}`)
           .end((err, res) => {
             if (err) return done(err);
             expect(res.status).toEqual(200);
-            expect(res.body.id).toEqual(this.tempNote.id);
-            expect(res.body.name).toEqual(this.tempNote.name);
-            expect(res.body.content).toEqual(this.tempNote.content);
+            expect(res.body.id).toEqual(this.tempDog.id);
+            expect(res.body.name).toEqual(this.tempDog.name);
+            expect(res.body.breed).toEqual(this.tempDog.breed);
             done();
           });
       });
@@ -45,7 +45,7 @@ describe('Note Routes', function () {
 
     describe('with an invalid id', function () {
       it('should respond with a 404', done => {
-        request.get(`${url}/api/note/123456789`)
+        request.get(`${url}/api/dog/123456789`)
           .end((err, res) => {
             expect(res.status).toEqual(404);
             done();
@@ -56,25 +56,25 @@ describe('Note Routes', function () {
   // GET tests end here
 
   // POST tests start here
-  describe('POST: /api/note', function () {
+  describe('POST: /api/dog', function () {
     describe('with a valid body', function () {
       afterEach(done => {
-        if (this.tempNote) {
-          Note.deleteNote(this.tempNote.id)
+        if (this.tempDog) {
+          Dog.deleteDog(this.tempDog.id)
             .then(() => done())
             .catch(err => done(err));
         }
       });
 
-      it('should return a note', done => {
-        request.post(`${url}/api/note`)
-          .send(exampleNote)
+      it('should return a dog', done => {
+        request.post(`${url}/api/dog`)
+          .send(exampleDog)
           .end((err, res) => {
             if (err) return done(err);
             expect(res.status).toEqual(200);
-            expect(res.body.name).toEqual(exampleNote.name);
-            expect(res.body.content).toEqual(exampleNote.content);
-            this.tempNote = res.body;
+            expect(res.body.name).toEqual(exampleDog.name);
+            expect(res.body.breed).toEqual(exampleDog.breed);
+            this.tempDog = res.body;
             done();
           });
       });
@@ -83,34 +83,34 @@ describe('Note Routes', function () {
   // POST tests end here
 
   // PUT tests start here
-  describe('PUT: /api/note', function() {
+  describe('PUT: /api/dog', function() {
     describe('with a valid id and body', function() {
       beforeEach(done => {
-        Note.createNote(exampleNote)
-          .then(note => {
-            this.tempNote = note;
+        Dog.createDog(exampleDog)
+          .then(dog => {
+            this.tempDog = dog;
             done();
           })
           .catch(err => done(err));
       });
       afterEach(done => {
-        if(this.tempNote) {
-          Note.deleteNote(this.tempNote.id)
+        if(this.tempDog) {
+          Dog.deleteDog(this.tempDog.id)
             .then(() => done())
             .catch(err => done(err));
         }
       });
 
-      it('should update a note and return a new note', done => {
-        let updateNote = {name: 'new name', content: 'new content'};
-        request.put(`${url}/api/note/${this.tempNote.id}`)
-          .send(updateNote)
+      it('should update a dog and return a new dog', done => {
+        let updateDog = {name: 'new name', breed: 'new breed'};
+        request.put(`${url}/api/dog/${this.tempDog.id}`)
+          .send(updateDog)
           .end((err, res) => {
             if(err) return done(err);
             expect(res.status).toEqual(200);
-            expect(res.body.id).toEqual(this.tempNote.id);
-            for(var prop in updateNote) {
-              expect(res.body[prop]).toEqual(updateNote[prop]);
+            expect(res.body.id).toEqual(this.tempDog.id);
+            for(var prop in updateDog) {
+              expect(res.body[prop]).toEqual(updateDog[prop]);
             }
             done();
           });

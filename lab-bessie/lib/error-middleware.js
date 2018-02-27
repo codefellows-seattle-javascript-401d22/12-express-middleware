@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('note:error-middleware');
+const debug = require('debug')('dog:error-middleware');
 const createError = require('http-errors');
 
 module.exports = function(err, req, res, next) {

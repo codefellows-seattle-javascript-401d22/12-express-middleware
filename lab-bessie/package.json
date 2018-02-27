@@ -7,9 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "DEBUG='note*' jest",
-    "test-coverage": "DEBUG='note*' jest --coverage",
-    "start": "DEBUG='note*' node server.js",
+    "test": "DEBUG='dog*' jest",
+    "test-coverage": "DEBUG='dog*' jest --coverage",
+    "start": "DEBUG='dog*' node server.js",
     "lint": "eslint ./"
   },
   "author": "",

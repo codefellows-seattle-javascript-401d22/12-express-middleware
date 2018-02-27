@@ -2,42 +2,42 @@
 
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
-const debug = require('debug')('note:note-router');
-const Note = require('../model/note.js');
-const noteRouter = new Router();
+const debug = require('debug')('dog:dog-router');
+const Dog = require('../model/dog.js');
+const dogRouter = new Router();
 
-noteRouter.post('/api/note', jsonParser, function(req, res, next) {
-  debug('POST: /api/note');
-  Note.createNote(req.body)
-    .then(note => res.json(note))
+dogRouter.post('/api/dog', jsonParser, function(req, res, next) {
+  debug('POST: /api/dog');
+  Dog.createDog(req.body)
+    .then(dog => res.json(dog))
     .catch(err => next(err));
 });
 
-noteRouter.get('/api/note/:id', function(req, res, next) {
-  debug('GET: /api/note/:id');
+dogRouter.get('/api/dog/:id', function(req, res, next) {
+  debug('GET: /api/dog/:id');
 
-  Note.fetchNote(req.params.id)
-    .then(note => res.json(note))
+  Dog.fetchDog(req.params.id)
+    .then(dog => res.json(dog))
     .catch(err => next(err));
 });
 
-noteRouter.get('/api/note', function(req, res, next) {
-  debug('GET: /api/note');
-  Note.fetchIDs()
+dogRouter.get('/api/dog', function(req, res, next) {
+  debug('GET: /api/dog');
+  Dog.fetchIDs()
     .then(ids => res.json(ids))
     .catch(err => next(err));
 });
 
-noteRouter.put('/api/note/:id', jsonParser, function(req, res, next) {
-  debug('PUT: /api/note/:id');
+dogRouter.put('/api/dog/:id', jsonParser, function(req, res, next) {
+  debug('PUT: /api/dog/:id');
 
-  Note.updateNote(req.params.id, req.body)
-    .then(note => res.json(note))
+  Dog.updateDog(req.params.id, req.body)
+    .then(dog => res.json(dog))
     .catch(err => next(err));
 });
 
-noteRouter.delete('/api/note/:id', function(req, res, next) {
-  debug('DELETE: /api/note/:id');
+dogRouter.delete('/api/dog/:id', function(req, res, next) {
+  debug('DELETE: /api/dog/:id');
 });
 
-module.exports = noteRouter;
+module.exports = dogRouter;
