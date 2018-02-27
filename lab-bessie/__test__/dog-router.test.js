@@ -15,6 +15,7 @@ const exampleDog = {
 describe('Dog Routes', function () {
   // GET tests start here
   describe('GET: /api/dog', function () {
+
     describe('with a valid id', function () {
       beforeEach(done => {
         Dog.createDog(exampleDog)
@@ -53,6 +54,16 @@ describe('Dog Routes', function () {
       });
     });
   });
+
+  describe('with invalid path', function() {
+    it('should return a 404', done => {
+      request.get(`${url}/api/snowflakes`)
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          done();
+        });
+    });
+  });
   // GET tests end here
 
   // POST tests start here
@@ -75,6 +86,16 @@ describe('Dog Routes', function () {
             expect(res.body.name).toEqual(exampleDog.name);
             expect(res.body.breed).toEqual(exampleDog.breed);
             this.tempDog = res.body;
+            done();
+          });
+      });
+    });
+    describe('without a valid body', function() {
+      it('should give a 400 error', done => {
+        request.post(`${url}/api/dog`)
+          .send({})
+          .end((err, res) => {
+            expect(res.status).toEqual(400);
             done();
           });
       });
@@ -112,6 +133,16 @@ describe('Dog Routes', function () {
             for(var prop in updateDog) {
               expect(res.body[prop]).toEqual(updateDog[prop]);
             }
+            done();
+          });
+      });
+    });
+    describe('with an invalid id and body', function() {
+      it('should return a 404', done => {
+        request.put(`${url}/api/dog/123456`)
+          .send({})
+          .end((err, res) => {
+            expect(res.status).toEqual(404);
             done();
           });
       });

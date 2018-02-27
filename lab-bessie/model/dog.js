@@ -23,7 +23,7 @@ Dog.createDog = function(_dog) {
     let dog = new Dog(_dog.name, _dog.breed);
     return storage.createItem('dog', dog);
   } catch(err) {
-    return Promise.reject(err);
+    return Promise.reject(createError(400, err));
   }
 };
 
