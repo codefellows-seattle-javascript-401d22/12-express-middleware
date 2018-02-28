@@ -40,6 +40,31 @@ describe('Beer Routes', function() {
           });
       });
     });
+    describe('without an id', function() {
+      beforeEach( done => {
+        Beer.createBeer(exampleBeer)
+          .then( beer => {
+            this.tempBeer = beer;
+            done();
+          })
+          .catch( err => done(err));
+      });
+      afterAll( done => {
+        Beer.deleteBeer(this.tempBeer.id)
+          .then( () => done())
+          .catch( err => done(err));
+      });
+      it('should return an array of ids', done => {
+        request.get(`${url}/api/beer/`)
+          .end((err,res) => {
+            if(err) return done(err);
+            expect(res.status).toEqual(200);
+            expect(res.body[0]).toEqual(this.tempBeer.id);
+            expect(Array.isArray(res.body)).toEqual(true);
+            done();
+          });
+      });
+    });
     describe('with an invalid id', function() {
       it('should respond with a 404', done => {
         request.get(`${url}/api/beer/1234`)
