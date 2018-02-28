@@ -32,7 +32,7 @@ exports.fetchItem = function(schemaName, id) {
       return Promise.reject(err);
     }
   })
-  .catch( err => Promise.reject(err));
+  .catch( err => Promise.reject(createError(404, err.message)));
 }
 
 exports.deleteItem = function(schemaName, id) {

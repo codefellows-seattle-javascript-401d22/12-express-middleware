@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const createError = require('http-errors');
 const debug = require('debug')('weed-server');
 
+const weedRouter = require('./route/weed-router.js');
 const cors = require('./lib/cors-middleware.js'); //our middleware
 const errors = require('./lib/error-middleware.js');
 
@@ -13,6 +14,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(cors);
+app.use(weedRouter);
 app.use(errors); //last thing before the server starts
 
 
