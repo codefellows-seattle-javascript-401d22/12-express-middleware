@@ -21,17 +21,16 @@ describe('Recipe Routes', function() {
         Recipe.createRecipe(exampleRecipe)
           .then( recipe => {
             this.tempRecipe = recipe;
-            console.log(this.tempRecipe);
             done();
           })
           .catch( err => done(err) );
       });
 
-      // afterAll( done => {
-      //   Recipe.deleteRecipe(this.tempRecipe.id)
-      //     .then( () => done() )
-      //     .catch( err => done(err) );
-      // });
+      afterAll( done => {
+        Recipe.deleteRecipe(this.tempRecipe.id)
+          .then( () => done() )
+          .catch( err => done(err) );
+      });
 
       it('should return a recipe', done => {
         request.get(`${url}/api/recipe/${this.tempRecipe.id}`)
@@ -46,9 +45,40 @@ describe('Recipe Routes', function() {
             done();
           });
       });
+
+      describe('with an invalid id', function() {
+        it('should respond with a 404', done => {
+          request.get(`${url}/api/recipe/123456789`)
+            .end((err, res) => {
+              expect(res.status).toEqual(404);
+              done();
+            });
+        });
+      });
     });
   });
 
+  describe('POST: /api/recipe', function() {
+    describe('with a valid body', function() {
+      afterEach( done => {
+        if (this.tempRecipe) {
+          Recipe.deleteRecipe(this.tempRecipe.id)
+            .then( () => done())
+            .catch( err => done(err));
+        }
+      });
 
-
+      it('should return a recipe', done => {
+        request.post(`${url}/api/recipe`)
+          .send(exampleRecipe)
+          .end((err, res) => {
+            if (err) return done(err);
+            expect(res.status).toEqual(200);
+            expect(res.body.name).toEqual(exampleRecipe.name);
+            this.tempRecipe = res.body;
+            done();
+          });
+      });
+    });
+  });
 });
