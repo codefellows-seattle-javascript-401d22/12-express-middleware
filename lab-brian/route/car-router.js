@@ -15,6 +15,7 @@ carRouter.post('/api/car', jsonParser, function(req, res, next) {
     .catch( err => next(err));
 });
 
+// http :3000/api/car/a31df699-f06a-4292-919e-384670e82040  
 carRouter.get('/api/car/:carId', function(req, res, next) {
   debug('GET: /api/car/:carId');
 
@@ -31,6 +32,7 @@ carRouter.get('/api/car', function(req, res, next) {
     .catch( err => next(err));
 });
 
+// http PUT :3000/api/car/a31df699-f06a-4292-919e-384670e82040 make=updated model=updated
 carRouter.put('/api/car/:carId', jsonParser, function(req, res, next) {
   debug('PUT: /api/car/:carId');
 
@@ -43,7 +45,12 @@ carRouter.delete('/api/car/:carId', function(req, res, next) {
   debug('DELETE: /api/car/:carId');
 
   Car.deleteCar(req.params.carId)
-    .then(car => res.json(car))
+    .then( () => {
+      res.writeHead(204, {
+        'Content-Type': 'application/json',
+      });
+      res.end();
+    })
     .catch( err => next(err));
 });
 

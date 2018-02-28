@@ -2,7 +2,6 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const createError = require('http-errors');
 const debug = require('debug')('car:server');
 
 const carRouter = require('./route/car-router.js');
