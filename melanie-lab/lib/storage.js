@@ -7,11 +7,11 @@ const debug = require('debug')('recipe:storage.js');
 
 module.exports = exports = {};
 
-exports.createItem = (schemaName, item) => {
+exports.createItem = function(schemaName, item) {
   debug('createItem');
 
-  if (!schemaName) throw new createError(400, 'expected schema name');
-  if (!item) throw new createError(400, 'expected item');
+  if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
+  if (!item) return Promise.reject(createError(400, 'expected item'));
 
   let json = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
@@ -19,37 +19,41 @@ exports.createItem = (schemaName, item) => {
     .catch( err => Promise.reject(err));
 };
 
-exports.fetchItem = (schemaName, id) => {
+exports.fetchItem = function(schemaName, id) {
   debug('fetchItem');
 
-  if (!schemaName) throw new createError(400, 'expected schema name');
-  if (!id) throw new createError(400, 'expected id');
+  if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
+  if (!id) return Promise.reject(createError(400, 'expected id'));
 
   return fs.readFileProm(`${__dirname}/../data/${schemaName}/${id}.json`)
     .then( data => {
       try {
-        return JSON.parse(data.toString());
+        let item = JSON.parse(data.toString());
+        return item;
       } catch (err) {
-        return Promise.reject(err);
+        return Promise.reject(404, err.message);
       }
     })
-    .catch( err => Promise.reject(err));
+    .catch( err => {
+      return Promise.reject(createError(404, err.message));
+    });
 };
 
-exports.deleteItem = (schemaName, id) => {
+exports.deleteItem = function(schemaName, id) {
   debug('deleteItem');
 
-  if (!schemaName) throw new createError(400, 'expected schema name');
-  if (!id) throw new createError(400, 'expected id');
+  if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
+  if (!id) return Promise.reject(createError(400, 'expected id'));
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
+    .then( () => id)
     .catch( err => Promise.reject(createError(404, err.message)));
 };
 
-exports.availableIDs = schemaName => {
+exports.availableIDs = function(schemaName) {
   debug('availableIDs');
 
-  if (!schemaName) throw new createError(400, 'expected schema name');
+  if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
 
   return fs.readdirProm(`${__dirname}/../data/${schemaName}`)
     .then( files => files.map(name => name.split('.json')[0]))

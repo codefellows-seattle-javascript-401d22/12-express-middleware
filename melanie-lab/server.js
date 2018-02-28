@@ -2,7 +2,6 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const createError = require('http-errors');
 const debug = require('debug')('recipe:server.js');
 
 const recipeRouter = require('./route/recipe-router.js');
