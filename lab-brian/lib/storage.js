@@ -45,11 +45,10 @@ exports.deleteItem = function(schemaName, id) {
     .catch(err => Promise.reject(createError(404, err)));
 };
 
-exports.availIds = function(schemaName) {
+exports.availIDs = function(schemaName) {
   debug('availIds');
   if(!schemaName) return Promise.reject(createError(400, 'expected schema name'));
-
   return fs.readdirProm(`${__dirname}/../data/${schemaName}`)
     .then( files => files.map(name => name.split('.json')[0]))
-    .catch( err = Promise.reject(createError(404, err.message)));
+    .catch( err => Promise.reject(createError(404, err.message)));
 };
