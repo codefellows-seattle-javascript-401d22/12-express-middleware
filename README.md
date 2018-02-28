@@ -1,4 +1,4 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 11: Single Resource Express API
+![cf](https://i.imgur.com/7v5ASc8.png) Lab 12: Single Resource Express API
 ======
 
 ## Submission Instructions
