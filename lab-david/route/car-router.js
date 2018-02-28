@@ -6,11 +6,11 @@ const debug = require('debug')('car:car-router');
 const Car = require('../model/car.js');
 const carRouter = new Router();
 
-carRouter.post('/api/car', jsonParser, (req,res,next) => {
-  debug('POST: /api/car');
+carRouter.post('/api/car/', jsonParser, (req,res,next) => {
+  debug('POST: /api/car/');
 
   Car.createCar(req.body)
-    .then( car => res.json(car))
+    .then(car => res.json(car))
     .catch(err => next(err));
 });
 
@@ -22,7 +22,7 @@ carRouter.get('/api/car/:carId', (req,res,next) => {
     .catch( err => next(err));
 });
 
-carRouter.get('/apir/car', (req,res,next) => {
+carRouter.get('/api/car', (req,res,next) => {
   debug('GET: /api/car');
 
   Car.lookupCarIds()
@@ -42,6 +42,7 @@ carRouter.delete('/api/car/:carId', (req,res,next) => {
   debug('DELETE: /api/car/:carId');
 
   Car.deleteCar(req.params.carId)
+    .then(() => console.log(res))
     .catch(err => next(err));
 });
 
