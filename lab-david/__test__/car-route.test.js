@@ -60,10 +60,9 @@ describe('Car Routes', function(){
 describe('POST: /api/car/', function(){
   describe('with a valid body', function(){
     afterEach( done => {
-      console.log('this.tempCar', this.tempCar);
-      if(this.tempCar){
-        Car.deleteCar(this.tempCar.id)
-          .then( () => {done();})
+      if(this.carId){
+        Car.deleteCar(this.carId)
+          .then( () => done())
           .catch( err => done(err));
       }
     });
@@ -73,6 +72,8 @@ describe('POST: /api/car/', function(){
         .send(exampleCar)
         .end((err,res) => {
           if(err) return done(err);
+          this.carId = res.body.id;
+          console.log('this.carId', this.carId);
           expect(res.status).toEqual(200);
           expect(res.body.make).toEqual(exampleCar.make);
           expect(res.body.model).toEqual(exampleCar.model);
@@ -82,3 +83,81 @@ describe('POST: /api/car/', function(){
     });
   });
 });
+
+describe('PUT: /api/car/:carId', function(){
+  describe('with a valid id', function(){
+    this.newCar = {
+      make: 'new make',
+      model: 'new model',
+      year: 1990,
+    };
+
+    beforeAll(done => {
+      Car.createCar(exampleCar)
+        .then(car => {
+          this.tempCar = car;
+          done();
+        })
+        .catch(err => done(err));
+    });
+
+    afterAll(done => {
+      Car.deleteCar(this.tempCar.id)
+        .then( () => done())
+        .catch(err => done(err));
+    });
+
+    it('should return an updated car', done => {
+      request.put(`${url}/api/car/${this.tempCar.id}`)
+        .send(this.newCar)
+        .end((err,res) => {
+          expect(res.body.id).toEqual(this.tempCar.id);
+          expect(res.body.make).toEqual(this.newCar.make);
+          expect(res.body.model).toEqual(this.newCar.model);
+          expect(res.body.year).toEqual(this.newCar.year);
+          expect(res.status).toEqual(200);
+          done();
+        });
+    });
+  });
+
+  describe('with an invalid id', function(){
+    this.newCar = {
+      make: 'new make',
+      model: 'new model',
+      year: 1990,
+    };
+
+    it('should return a 404: Not Found', done => {
+      request.put(`${url}/api/car/129381`)
+        .send(this.newCar)
+        .end((err,res) => {
+          expect(res.status).toEqual(404);
+          expect(err.status).toEqual(404);
+          expect(err.message).toEqual('Not Found');
+          done();
+        });
+    });
+  });
+});
+
+// describe('DELETE: /api/car/:carId', function(){
+//   describe('with a valid file path', function(){
+//     beforeEach(done => {
+//       Car.createCar(exampleCar)
+//         .then(car => {
+//           this.tempCar = car;
+//           done();
+//         })
+//         .catch(err => done(err));
+//     });
+
+//     it('should return status 204', done => {
+//       request.delete(`${url}/api/car/${this.tempCar.id}`)
+//         .end((err,res) => {
+//           expect(res.status).toEqual(204);
+//           done();
+//         });
+//     });
+//   });
+// });
