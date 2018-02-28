@@ -104,7 +104,7 @@ describe('Weed Routes', function() {
         }
       });
 
-      it.only('should update weed and return new weed', done => {
+      it('should update weed and return new weed', done => {
         let updateWeed = { type: 'new type', strain: 'new strain' };
         console.log(this.tempWeed.id);
         request.put(`${url}/api/weed/${this.tempWeed.id}`)

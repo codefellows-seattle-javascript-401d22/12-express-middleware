@@ -2,7 +2,6 @@
 
 const express =  require('express');//3rd party middleware
 const morgan = require('morgan');
-const createError = require('http-errors');
 const debug = require('debug')('weed-server');
 
 const weedRouter = require('./route/weed-router.js');

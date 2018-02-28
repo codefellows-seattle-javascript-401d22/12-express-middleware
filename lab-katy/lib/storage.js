@@ -14,9 +14,9 @@ exports.createItem = function(schemaName, item) {
 
   let json = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
-  .then( () => item)
-  .catch( err => Promise.reject(err));
-}
+    .then( () => item)
+    .catch( err => Promise.reject(err));
+};
 
 exports.fetchItem = function(schemaName, id) {
   debug('fetchItem');
@@ -24,16 +24,16 @@ exports.fetchItem = function(schemaName, id) {
   if (!id) return Promise.reject(createError(400, 'expected id'));
 
   return fs.readFileProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  .then( data => {
-    try {
-      let item = JSON.parse(data.toString());
-      return item;
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  })
-  .catch( err => Promise.reject(createError(404, err.message)));
-}
+    .then( data => {
+      try {
+        let item = JSON.parse(data.toString());
+        return item;
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    })
+    .catch( err => Promise.reject(createError(404, err.message)));
+};
 
 exports.deleteItem = function(schemaName, id) {
   debug('deleteItem');
@@ -41,8 +41,8 @@ exports.deleteItem = function(schemaName, id) {
   if (!id) return Promise.reject(createError(400, 'expected item'));
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  .catch( err => Promise.reject(createError(404, err.message)));
-}
+    .catch( err => Promise.reject(createError(404, err.message)));
+};
 
 exports.availIDs = function(schemaName) {
   debug('availIDs');
@@ -50,6 +50,6 @@ exports.availIDs = function(schemaName) {
   if(!schemaName) return Promise.reject(createError(400, 'expected schema name'));
 
   return fs.readdirProm(`${__dirname}/../data/${schemaName}`)
-  .then( files => files.map( name => name.split('.json')[0]))
-  .catch( err => Promise.reject(createError(404, err.message)));
-}
+    .then( files => files.map( name => name.split('.json')[0]))
+    .catch( err => Promise.reject(createError(404, err.message)));
+};
