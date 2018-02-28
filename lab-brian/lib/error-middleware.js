@@ -13,6 +13,12 @@ module.exports = function(err, req, res, next) {
     return;
   }
 
+  else if(err.toString().indexOf('expected')>-1) {
+    res.status(400).send(err.name);
+    next();
+    return;
+  }
+
   debug('server error');
   err = createError(500, err.message);
   res.status(err.status).send(err.name);

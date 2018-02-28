@@ -16,7 +16,7 @@ exports.createItem = function(schemaName, item) {
   let json = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
     .then( () => item)
-    .catch( err => Promise.reject(err));
+    .catch( err => Promise.reject(createError(404, err)));
 };
 
 exports.fetchItem = function(schemaName, id) {
@@ -42,7 +42,7 @@ exports.deleteItem = function(schemaName, id) {
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
     .then(() => `deleted ${id}`)
-    .catch(err => Promise.reject(err));
+    .catch(err => Promise.reject(createError(404, err)));
 };
 
 exports.availIds = function(schemaName) {
