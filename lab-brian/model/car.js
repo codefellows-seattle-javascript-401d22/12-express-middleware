@@ -54,5 +54,5 @@ Car.deleteCar = function(id) {
 
 Car.fetchIDs = function() {
   debug('fetchIds');
-  return storage.availIds('car');
+  return storage.availIDs('car');
 };

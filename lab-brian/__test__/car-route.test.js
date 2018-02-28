@@ -43,6 +43,16 @@ describe('Car routes', function() {
           });
       });
 
+      describe('with no id', function() {
+        it('should respond with a 200 status and a list of ids', done => {
+          request.get(`${url}/api/car`)
+            .end((err, res) => {
+              expect(res.status).toEqual(200);
+              done();
+            });
+        });
+      });
+
       describe('with an invalid id', function() {
         it('should respond with a 404 error', done => {
           request.get(`${url}/api/car/242145`)
@@ -138,18 +148,6 @@ describe('Car routes', function() {
             });
         });
       });
-  
-      // describe('with an invalid req.body', () => {
-      //   it('shoud respond with a 400 error', done => {
-      //     let updateCar = { make: 'new make bad id'};
-      //     request.put(`${url}/api/car/${this.tempCar.id}`)
-      //       .send( )
-      //       .end((err, res) => {
-      //         expect(res.status).toEqual(400);
-      //         done();
-      //       });
-      //   });
-      // });
 
     });
 
@@ -183,15 +181,15 @@ describe('Car routes', function() {
       });
 
 
-      // describe('DELETE: /api/car', () => {
-      //   it('should not delete and return a 400 error', (done) => {
-      //     request.delete('localhost:3000/api/car')
-      //       .end((err, res) => {
-      //         expect(res.status).toEqual(400);
-      //         done();
-      //       });
-      //   });
-      // });
+      describe('DELETE: /api/car', () => {
+        it('should not delete and return a 400 error', (done) => {
+          request.delete('localhost:3000/api/car')
+            .end((err, res) => {
+              expect(res.status).toEqual(404);
+              done();
+            });
+        });
+      });
 
     });
   });
