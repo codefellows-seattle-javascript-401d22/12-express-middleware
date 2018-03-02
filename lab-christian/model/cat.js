@@ -42,7 +42,7 @@ Cat.update = function(id, _cat) {
       return storage.createItem('cat', cat);
     })
     .catch( err => Promise.reject(createError(404, err.message)));
-}
+};
 
 
 Cat.delete = function(id) {

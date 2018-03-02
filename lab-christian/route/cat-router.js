@@ -2,6 +2,7 @@
 
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
+const createError = require('http-errors');
 const debug = require('debug')('cat:cat-router');
 const Cat = require('../model/cat');
 
@@ -40,7 +41,9 @@ catRouter.put('/api/cat/:id', jsonParser, function(req, res, next) {
 catRouter.delete('/api/cat/:id', function(req, res, next) {
   debug('DELETE: /api/cat/:id');
 
-  Cat.delete(req.params.id);
+  Cat.delete(req.params.id)
+    .then( () => res.status(204).send())
+    .catch( err => next(createError(404, err.message)));
 });
 
 module.exports = catRouter;

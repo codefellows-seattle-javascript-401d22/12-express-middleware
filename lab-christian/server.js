@@ -2,7 +2,7 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const createError = require('http-errors');
+// const createError = require('http-errors');
 const debug = require('debug')('cat:server');
 
 const catRouter = require('./route/cat-router');
