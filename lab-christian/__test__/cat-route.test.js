@@ -99,16 +99,16 @@ describe('Cat Routes', function() {
       it('should update a note and return a new cat', done => {
         let updateCat = { name: 'newdopename', color: 'newrainbow' };
         request.put(`${url}/api/cat/${this.tempCat.id}`)
-        .send(updateCat)
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).toEqual(200);
-          expect(res.body.id).toEqual(this.tempCat.id);
-          for (var prop in updateCat) {
-            expect(res.body[prop]).toEqual(updateCat[prop]);
-            done();
-          };
-        });
+          .send(updateCat)
+          .end((err, res) => {
+            if (err) return done(err);
+            expect(res.status).toEqual(200);
+            expect(res.body.id).toEqual(this.tempCat.id);
+            for (var prop in updateCat) {
+              expect(res.body[prop]).toEqual(updateCat[prop]);
+              done();
+            }
+          });
       });
     });
   });
