@@ -9,7 +9,8 @@
   "scripts": {
     "test": "DEBUG='beer*' jest",
     "start": "DEBUG='beer*' node server.js",
-    " test coverage": "DEBUG='beer*'jest --coverage"
+    " test coverage": "DEBUG='beer*'jest --coverage",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "eslint": "^4.18.1",
     "jest": "^22.4.2",
     "superagent": "^3.8.2"
   }
