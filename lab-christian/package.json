@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "DEBUG='cat*' jest",
+    "test": "mkdir -p data/cat && DEBUG='cat*' && jest",
     "start": "DEBUG='cat*' node server.js",
     "lint": "eslint ."
   },
