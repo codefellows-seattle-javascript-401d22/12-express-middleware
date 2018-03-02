@@ -51,4 +51,4 @@ exports.listAll = function(schemaName) {
   return fs.readdirProm(`${__dirname}/../data/${schemaName}`)
     .then( files => files.map(name => name.split('.json')[0]))
     .catch( err => Promise.reject(createError(404, err.message)));
-}
+};
