@@ -42,8 +42,9 @@ beerRouter.delete('/api/beer/:id', function(req, res, next) {
   debug('DELETE: /api/beer/:id');
 
   Beer.deleteBeer(req.params.id)
-    .then( id => res.json(id))
+    .then( () => res.sendStatus(204))
     .catch(err => next(err));
 });
-  
+
 module.exports = beerRouter;
+    

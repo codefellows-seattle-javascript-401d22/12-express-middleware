@@ -144,8 +144,7 @@ describe('Beer Routes', function() {
         request.delete(`${url}/api/beer/${this.tempBeer.id}`)
           .end((err,res) => {
             if(err) return done(err);
-            expect(res.status).toEqual(200);
-            expect(res.body).toEqual(this.tempBeer.id);
+            expect(res.status).toEqual(204);
             done();
           });
       });
@@ -162,4 +161,5 @@ describe('Beer Routes', function() {
   });
 });
       
+            
             

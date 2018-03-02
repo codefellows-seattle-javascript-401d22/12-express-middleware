@@ -25,15 +25,13 @@ exports.fetchItem = function(schemaName, id) {
 
   return fs.readFileProm(`${__dirname}/../data/${schemaName}/${id}.json`)
     .then( data => {
-      try {
-        let item = JSON.parse(data.toString());
-        return item;
-      } catch (err) {
-        return Promise.reject(err);
-      }
+      let item = JSON.parse(data.toString());
+      return item;
     })
     .catch( err => Promise.reject(createError(404, err)));
 };
+      
+    
 
 exports.deleteItem = function(schemaName, id) {
   debug('deleteItem');
