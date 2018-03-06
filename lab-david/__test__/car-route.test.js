@@ -1,6 +1,7 @@
 'use strict';
 
 const request = require('superagent');
+const debug = require('debug')('car:car-route.test');
 const Car = require('../model/car.js');
 const url = 'http://localhost:3000';
 
@@ -26,7 +27,6 @@ describe('Car Routes', function(){
       });
 
       afterAll( done => {
-        console.log(this.tempCar.id);
         Car.deleteCar(this.tempCar.id)
           .then( () => done())
           .catch( err => done(err));
@@ -141,23 +141,23 @@ describe('PUT: /api/car/:carId', function(){
   });
 });
 
-// describe('DELETE: /api/car/:carId', function(){
-//   describe('with a valid file path', function(){
-//     beforeEach(done => {
-//       Car.createCar(exampleCar)
-//         .then(car => {
-//           this.tempCar = car;
-//           done();
-//         })
-//         .catch(err => done(err));
-//     });
+describe('DELETE: /api/car/:carId', function(){
+  describe('with a valid file path', function(){
+    beforeEach(done => {
+      Car.createCar(exampleCar)
+        .then(car => {
+          this.tempCar = car;
+          done();
+        })
+        .catch(err => done(err));
+    });
 
-//     it('should return status 204', done => {
-//       request.delete(`${url}/api/car/${this.tempCar.id}`)
-//         .end((err,res) => {
-//           expect(res.status).toEqual(204);
-//           done();
-//         });
-//     });
-//   });
-// });
+    it('should return status 204', done => {
+      request.delete(`${url}/api/car/${this.tempCar.id}`)
+        .end((err,res) => {
+          expect(res.status).toEqual(204);
+          done();
+        });
+    });
+  });
+});

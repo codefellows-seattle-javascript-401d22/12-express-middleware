@@ -42,7 +42,7 @@ carRouter.delete('/api/car/:carId', (req,res,next) => {
   debug('DELETE: /api/car/:carId');
 
   Car.deleteCar(req.params.carId)
-    .then(() => next())
+    .then(() => res.status(204).send())
     .catch(err => next(err));
 });
 
