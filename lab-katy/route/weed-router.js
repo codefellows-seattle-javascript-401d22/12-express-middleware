@@ -41,7 +41,7 @@ weedRouter.put('/api/weed/:weedId', jsonParser, function(req, res, next){
 weedRouter.delete('/api/weed/:weedId', function(req, res, next) {
   debug('DELETE: /api/weed/:weedId');
 
-  Weed.smokeweed(req.params.weedId)
+  Weed.smokeWeed(req.params.weedId)
     .catch( err => next(err));
 });
 
