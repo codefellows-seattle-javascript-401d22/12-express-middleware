@@ -18,4 +18,4 @@ module.exports = function(err, req, res, next) { //express recognises this as er
   err = createError(500, err.message);
   res.status(err.status).send(err.name);
   next();
-}
+};

@@ -41,6 +41,7 @@ exports.deleteItem = function(schemaName, id) {
   if (!id) return Promise.reject(createError(400, 'expected item'));
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
+    .then( () => res.status(204).send())
     .catch( err => Promise.reject(createError(404, err.message)));
 };
 

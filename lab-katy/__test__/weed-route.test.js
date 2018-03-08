@@ -48,7 +48,6 @@ describe('Weed Routes', function() {
         it('should respond with a 404', done => {
           request.get(`${url}/api/weed/123456789`)
             .end((err, res) => {
-              //this is not passing!
               expect(res.status).toEqual(404); 
               done();
             });
