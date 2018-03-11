@@ -4,7 +4,7 @@ const debug = require('debug')('beer:error-middleware');
 const createError = require('http-errors');
 
 module.exports = function(err, req, res, next) {
-  console.error(err.message);
+  
   if(err.status) {
     debug('user error');
     res.status(err.status).send(err.name);
