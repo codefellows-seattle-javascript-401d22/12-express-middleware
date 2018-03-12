@@ -1,19 +1,20 @@
 'use strict';
 
-const debug = require('debug')('note:error-middleware');
+const debug = require('debug')('car:error-middleware');
 const createError = require('http-errors');
 
-module.exports = function(err, req, res, next){
+module.exports = function(err, req, res, next) {
   console.error(err.message);
 
-  if (err.status){
-    debug('user error');
+  if (err.status) {
+    debug('cors middleware - user error');
     res.status(err.status).send(err.name);
     next();
     return;
   }
-  debug('server error');
+
+  debug('cors middleware - server error');
   err = createError(500, err.message);
   res.status(err.status).send(err.name);
   next();
-}
+};
